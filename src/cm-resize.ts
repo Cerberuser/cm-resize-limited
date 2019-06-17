@@ -1,3 +1,6 @@
+// just temporary, so that we can test it
+// tslint:disable
+
 import * as codemirror from 'codemirror';
 import dragTracker, {CoordPair} from 'drag-tracker';
 
