@@ -1,13 +1,5 @@
-# cm-resize
-Add a resize handle to your CodeMirror editor.
-
-Based on an  [example](https://jsfiddle.net/mindplay/rs2L2vtb/2/) by [Rasmus Schultz](https://github.com/mindplay-dk) ([CodeMirror issue](https://github.com/codemirror/CodeMirror/issues/850)), with some extra options.
-
-#### Demo
-
-https://rawgit.com/Sphinxxxx/cm-resize/master/demo/index.html  
-https://codepen.io/Sphinxxxx/pen/dVPXdX
-
+# cm-resize-limited
+Add a resize handle to your CodeMirror editor. Forked from [Sphinxxxx/cm-resize](https://github.com/Sphinxxxx/cm-resize), with some small improvements.
 
 ## Getting Started
 
@@ -15,19 +7,13 @@ https://codepen.io/Sphinxxxx/pen/dVPXdX
 
 * NPM:
 
-  + ```npm install cm-resize --save```
-  + ```import cmResize from 'cm-resize';```
-
-* ..or client-side `<script>`:
-
-```html
-<script src="https://unpkg.com/cm-resize@1"></script>
-```
+  + ```npm install cm-resize-limited --save```
+  + ```import cmResize from 'cm-resize-limited';```
 
 #### Usage
 
 ```javascript
-var myCodeMirror = CodeMirror.fromTextArea(...);  //..or some other way to create a CodeMirror instance
+const myCodeMirror = CodeMirror.fromTextArea(element, options);  //..or some other way to create a CodeMirror instance
 cmResize(myCodeMirror);
 ```
 
@@ -35,14 +21,17 @@ cmResize(myCodeMirror);
 ## Options
 
 ```javascript
-var handle = cmResize(myCodeMirror, {
-    minWidth:  200,               //Minimum size of the CodeMirror editor.
+const handle = cmResize(myCodeMirror, {
+    minWidth:  200,               // Minimum size of the CodeMirror editor.
     minHeight: 100,
+    
+    maxWidth:  400,               // Maximum size of the CodeMirror editor.
+    maxHeight: 800,
 
-    resizableWidth:  true,        //Which direction the editor can be resized (default: both width and height).
+    resizableWidth:  true,        // In which direction the editor can be resized (default: both width and height).
     resizableHeight: true,
 
-    cssClass: 'cm-resize-handle', //CSS class to use on the *default* resize handle.
-    handle:                       //An element to use as the handler instead of the default one (`cssClass` doesn't apply here).
+    cssClass: 'cm-resize-handle', // CSS class to use on the *default* resize handle.
+    handle: someElement,          // An element to use as the handler instead of the default one (`cssClass` doesn't apply here).
 });
 ```

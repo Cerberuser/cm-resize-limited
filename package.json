@@ -1,46 +1,55 @@
 {
-  "name": "cm-resize",
-  "version": "1.0.1",
+  "name": "cm-resize-limited",
+  "version": "1.0.0",
   "description": "Add a resize handle to your CodeMirror editor.",
-  "author": "Andreas Borgen (https://github.com/Sphinxxxx)",
-  "homepage": "https://github.com/Sphinxxxx/cm-resize",
+  "author": "Konstantin Bagrov (https://github.com/Cerberuser)",
+  "contributors": [
+    "Andreas Borgen (https://github.com/Sphinxxxx)"
+  ],
+  "homepage": "https://github.com/Cerberuser/cm-resize-limited",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sphinxxxx/cm-resize.git"
+    "url": "https://github.com/Cerberuser/cm-resize-limited.git"
   },
   "bugs": {
-    "url": "https://github.com/Sphinxxxx/cm-resize/issues"
+    "url": "https://github.com/Cerberuser/cm-resize-limited/issues"
   },
-  "main": "dist/cm-resize.js",
-  "unpkg": "dist/cm-resize.min.js",
-  "module": "src/cm-resize.js",
+  "main": "dist/index.js",
+  "unpkg": "dist/index.min.js",
+  "module": "src/cm-resize.ts",
   "files": [
     "src/",
     "dist/"
   ],
   "scripts": {
-    "prepublish": "bash ./scripts/prepub.sh",
-    "postpublish": "bash ./scripts/postpub.sh",
+    "build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "gulp": "^4.0.0",
-    "gulp-file": "^0.4.0",
-    "gulp-header": "^2.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-strip-comments": "^2.5.2",
-    "gulp-uglify": "^3.0.0",
-    "node-sass": "^4.8.3",
-    "rollup": "^0.56.2",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-node-resolve": "^3.0.3"
+    "@types/codemirror": "0.0.74",
+    "babel-core": "6.26.3",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "gulp": "4.0.2",
+    "gulp-file": "0.4.0",
+    "gulp-header": "2.0.7",
+    "gulp-rename": "1.4.0",
+    "gulp-replace": "0.6.1",
+    "gulp-strip-comments": "2.5.2",
+    "gulp-uglify": "3.0.2",
+    "node-sass": "4.12.0",
+    "rollup": "1.15.6",
+    "rollup-plugin-babel": "3.0.7",
+    "rollup-plugin-node-resolve": "3.4.0",
+    "rollup-plugin-typescript": "1.0.1",
+    "shelljs": "0.8.3",
+    "tslib": "^1.10.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.2"
   },
   "dependencies": {
-    "drag-tracker": "^0.4.3"
+    "drag-tracker": "^1.0.0"
   }
 }
