@@ -16,8 +16,8 @@
     "url": "https://github.com/Cerberuser/cm-resize-limited/issues"
   },
   "main": "dist/index.js",
+  "types": "dist/cm-resize.d.ts",
   "unpkg": "dist/index.min.js",
-  "module": "src/cm-resize.ts",
   "files": [
     "src/",
     "dist/"
@@ -43,7 +43,7 @@
     "rollup": "1.15.6",
     "rollup-plugin-babel": "3.0.7",
     "rollup-plugin-node-resolve": "3.4.0",
-    "rollup-plugin-typescript": "1.0.1",
+    "rollup-plugin-typescript2": "0.21.1",
     "shelljs": "0.8.3",
     "tslib": "^1.10.0",
     "tslint": "^5.17.0",

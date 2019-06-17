@@ -23,9 +23,10 @@ import * as pkg from "./package.json";
 
 import gulp from "gulp";
 import file from "gulp-file";
+import * as fs from 'fs';
 import {rollup} from "rollup";
 import babel from "rollup-plugin-babel";
-import typescript from "rollup-plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
 //If the code imports modules from /node_modules
 import resolve from "rollup-plugin-node-resolve";
 
@@ -40,12 +41,12 @@ import sass from "node-sass";
 import replace from "gulp-replace";
 
 //Automatically build/reload on file changes:
-import {spawn} from "child_process";
+// import {spawn} from "child_process";
 
-const globalName = "cmResize",
-    entryScript = pkg.module,
-    outFolder = "dist/",
-    outFile = "index";
+const globalName = "cmResize";
+const entryScript = "src/cm-resize.ts";
+const outFolder = "dist/";
+const outFile = "index";
 
 const myBanner = `/*!
  * <%= pkg.name %> v<%= pkg.version %>
@@ -78,10 +79,8 @@ gulp.task("build", async () => {
             }),
         ],
     });
-    const {output: [gen]} = await bundle.generate({
-        format: "umd",
-        name: globalName,
-    });
+    // Temporary write (to emit TypeScript declarations)
+    await bundle.write({format: "umd", name: globalName, file: outFolder + outFile + '.js'});
 
     //Paste needed CSS into the JS code:
     const sassed = sass.renderSync({
@@ -90,7 +89,7 @@ gulp.task("build", async () => {
     });
     const css = sassed.css.toString(); //(Buffer.toString());
 
-    file(outFile + ".js", gen.code, {src: true})
+    file(outFile + ".js", fs.readFileSync(outFolder + outFile + '.js'), {src: true})
         .pipe(strip())
         .pipe(replace("## PLACEHOLDER-CSS ##", css.replace(/'/g, "\\'").trim()))
 
@@ -109,52 +108,53 @@ gulp.task("build", async () => {
         .pipe(gulp.dest(outFolder));
 });
 
-/* The rest of these tasks are only here to run 'build' automatically when files change */
-
-//Automatically rebuild the library when code files change:
-//https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulpwatchglobs-opts-fn
-//https://css-tricks.com/gulp-for-beginners/
-gulp.task("watch", function() {
-    console.log("** Listening for file changes...");
-
-    //Rebuild when anything in src/ changes:
-    //https://stackoverflow.com/questions/27645103/how-to-gulp-watch-multiple-files
-    const watcher = gulp.watch(["src/**/*.*"], gulp.parallel("build"));
-
-    watcher.on("change", function(path, stats) {
-        console.log("File " + path + " was changed");
-    });
-    watcher.on("unlink", function(path) {
-        console.log("File " + path + " was removed");
-    });
-});
-
-gulp.task("startup", gulp.series("build", "watch"));
-
-//In addition to listening for code changes, we also need to restart gulp whenever package.json or gulpfile.babel.js change
-//https://stackoverflow.com/questions/22886682/how-can-gulp-be-restarted-upon-each-gulpfile-change
-//https://gist.github.com/tilap/31167027ddee8acbf0e7
-gulp.task("auto-reload", function() {
-    let p;
-
-    gulp.watch(["*.js*"], spawnChildren);
-    spawnChildren();
-
-    function spawnChildren(callback) {
-        //Kill previous spawned process
-        if (p) {
-            p.kill();
-        }
-
-        //`spawn` a child `gulp` process linked to the parent `stdio`
-        p = spawn("gulp", ["startup"], {stdio: "inherit"});
-
-        //https://github.com/gulpjs/gulp/blob/master/docs/API.md#fn-1
-        if (callback) {
-            console.log("package.json or gulpfile.babel.js changed, restarted..");
-            callback();
-        }
-    }
-});
-
-gulp.task("default", gulp.series("auto-reload"));
+// TODO: this all should work eventually too
+// /* The rest of these tasks are only here to run 'build' automatically when files change */
+//
+// //Automatically rebuild the library when code files change:
+// //https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulpwatchglobs-opts-fn
+// //https://css-tricks.com/gulp-for-beginners/
+// gulp.task("watch", function() {
+//     console.log("** Listening for file changes...");
+//
+//     //Rebuild when anything in src/ changes:
+//     //https://stackoverflow.com/questions/27645103/how-to-gulp-watch-multiple-files
+//     const watcher = gulp.watch(["src/**/*.*"], gulp.parallel("build"));
+//
+//     watcher.on("change", function(path, stats) {
+//         console.log("File " + path + " was changed");
+//     });
+//     watcher.on("unlink", function(path) {
+//         console.log("File " + path + " was removed");
+//     });
+// });
+//
+// gulp.task("startup", gulp.series("build", "watch"));
+//
+// //In addition to listening for code changes, we also need to restart gulp whenever package.json or gulpfile.babel.js change
+// //https://stackoverflow.com/questions/22886682/how-can-gulp-be-restarted-upon-each-gulpfile-change
+// //https://gist.github.com/tilap/31167027ddee8acbf0e7
+// gulp.task("auto-reload", function() {
+//     let p;
+//
+//     gulp.watch(["*.js*"], spawnChildren);
+//     spawnChildren();
+//
+//     function spawnChildren(callback) {
+//         //Kill previous spawned process
+//         if (p) {
+//             p.kill();
+//         }
+//
+//         //`spawn` a child `gulp` process linked to the parent `stdio`
+//         p = spawn("gulp", ["startup"], {stdio: "inherit"});
+//
+//         //https://github.com/gulpjs/gulp/blob/master/docs/API.md#fn-1
+//         if (callback) {
+//             console.log("package.json or gulpfile.babel.js changed, restarted..");
+//             callback();
+//         }
+//     }
+// });
+//
+// gulp.task("default", gulp.series("auto-reload"));
