@@ -1,6 +1,6 @@
 {
   "name": "cm-resize-limited",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Add a resize handle to your CodeMirror editor.",
   "author": "Konstantin Bagrov (https://github.com/Cerberuser)",
   "contributors": [
