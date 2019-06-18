@@ -1,5 +1,5 @@
 /*!
- * cm-resize-limited v1.0.0
+ * cm-resize-limited v1.0.1
  * https://github.com/Cerberuser/cm-resize-limited
  *
  * Copyright 2017-2019 Andreas Borgen (https://github.com/Sphinxxxx)
@@ -231,8 +231,8 @@
         var minH = config.minHeight || 100;
         var maxW = config.maxWidth || 400;
         var maxH = config.maxHeight || 800;
-        var resizeW = config.resizableWidth !== false;
-        var resizeH = config.resizableHeight !== false;
+        var resizeW = config.resizableWidth === true;
+        var resizeH = config.resizableHeight === true;
         var css = config.cssClass || 'cm-resize-handle';
         var cmElement = cm.getWrapperElement();
         var cmHandle = config.handle || function () {
