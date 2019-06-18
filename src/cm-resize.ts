@@ -26,8 +26,8 @@ function cmResize(cm: codemirror.Editor, configInput?: ResizeOptions) {
     const minH = config.minHeight || 100;
     const maxW = config.maxWidth || 400;
     const maxH = config.maxHeight || 800;
-    const resizeW = (config.resizableWidth !== false);
-    const resizeH = (config.resizableHeight !== false);
+    const resizeW = config.resizableWidth === true;
+    const resizeH = config.resizableHeight === true;
     const css = config.cssClass || 'cm-resize-handle';
 
     const cmElement = cm.getWrapperElement();
